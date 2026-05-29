@@ -4,13 +4,20 @@ A small set of [Strands Agents](https://strandsagents.com/) demos that build up
 from a one-line "hello agent" to a multi-agent system that introspects the
 Raspberry Pi it's running on.
 
+**Purpose.** These samples are a learning aid for running Strands Agents — and
+agentic patterns more generally — on a Raspberry Pi or comparable edge
+hardware. They walk through the core building blocks (agent + model, agent +
+tools, single agent over real device telemetry, multi-agent orchestration)
+on a device small enough to sit on a desk, so you can see end-to-end how an
+on-device agent observes its host and coordinates with peers.
+
 All demos use Claude Sonnet 4.6 on Amazon Bedrock (`us.anthropic.claude-sonnet-4-6`
 in `us-west-2`). You'll need AWS credentials with Bedrock access on the model.
 
-> **⚠️ Demo code, not production.** These scripts are intended for learning and
-> local experimentation on a personal Raspberry Pi. See the
-> [Security notes](#security-notes) section before running on anything you
-> care about or exposing the chat interface beyond your own terminal.
+> **⚠️ Demo code, not production.** These scripts are intended for learning
+> and local experimentation on a personal Raspberry Pi. Review the
+> [Security notes](#security-notes) section before running them on a shared
+> device or exposing the chat interface beyond your own terminal.
 
 ## Setup
 
@@ -147,8 +154,8 @@ running them outside your own machine.
 **Demo-only caveats — do not skip**
 
 - **No authentication on `--chat`.** Anyone who can run the script can drive
-  the agent, including consuming your Bedrock quota / spending money on
-  inference. Do not expose this over a network, a shared shell, or a public
+  the agent and consume your Bedrock quota and inference budget under your
+  account. Do not expose this over a network, a shared shell, or a public
   notebook.
 - **Telemetry is identifying information.** `pi_info` exposes the hostname,
   kernel, and OS version. Fine for your own Pi; consider it before pasting
@@ -162,8 +169,10 @@ running them outside your own machine.
   shell tool.
 - **AWS credentials.** The demos use your ambient AWS credentials. Don't
   commit `~/.aws/credentials`, `.env` files, or anything else with keys.
-- **No rate limiting / cost controls.** The chat loop will happily call
-  Bedrock on every prompt. Watch the bill if you leave it running.
+- **No rate limiting or usage controls.** The chat loop invokes Bedrock on
+  every prompt; there is no per-session cap, throttling, or budget guard.
+  Monitor your account's usage and set Bedrock quotas / AWS Budgets alerts
+  if you plan to leave it running.
 
 **If you adapt this for anything beyond a personal demo**
 
